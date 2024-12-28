@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            background: #e2e2e2;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        ul li button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        ul li button:hover {
+            background: darkred;
+        }
+        input[type="text"] {
+            width: calc(100% - 110px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button.add {
+            background: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button.add:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+        <div>
+            <input type="text" id="taskInput" placeholder="Digite uma tarefa">
+            <button class="add" onclick="addTask()">Adicionar</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Carrega as tarefas salvas ao abrir a página
+        window.onload = function() {
+            loadTasks();
+        };
+
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+
+            if (taskText === '') {
+                alert('Por favor, insira uma tarefa!');
+                return;
+            }
+
+            const taskList = document.getElementById('taskList');
+            const li = document.createElement('li');
+
+            li.innerHTML = `${taskText} <button onclick="deleteTask(this)">Excluir</button>`;
+            taskList.appendChild(li);
+
+            saveTasks();
+            taskInput.value = '';
+        }
+
+        function deleteTask(button) {
+            const li = button.parentElement;
+            li.remove();
+            saveTasks();
+        }
+
+        function saveTasks() {
+            const tasks = [];
+            const taskList = document.getElementById('taskList');
+            taskList.querySelectorAll('li').forEach(li => {
+                tasks.push(li.textContent.replace('Excluir', '').trim());
+            });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            const taskList = document.getElementById('taskList');
+
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.innerHTML = `${task} <button onclick="deleteTask(this)">Excluir</button>`;
+                taskList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
