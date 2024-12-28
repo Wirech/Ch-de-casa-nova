@@ -1,6 +1,6 @@
 // Importações do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -17,57 +17,103 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Função para carregar tarefas
-async function loadTasks() {
-    const taskList = document.getElementById('taskList');
-    taskList.innerHTML = '';
+// Variáveis Globais
+let selectedGiftId = null;
+
+// Carregar presentes disponíveis
+async function loadGifts() {
+    const giftGrid = document.getElementById('giftGrid');
+    giftGrid.innerHTML = '';
 
     try {
-        const querySnapshot = await getDocs(collection(db, "tasks"));
+        const querySnapshot = await getDocs(collection(db, "presentes"));
         querySnapshot.forEach((doc) => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                ${doc.data().task} 
-                <button onclick="deleteTask('${doc.id}')">Excluir</button>
+            const gift = doc.data();
+            const giftItem = document.createElement('div');
+            giftItem.className = 'gift-item';
+
+            giftItem.innerHTML = `
+                <img src="${gift.imagem}" alt="${gift.nome}">
+                <p>${gift.nome}</p>
+                <button onclick="selectGift('${doc.id}', '${gift.nome}')">Selecionar</button>
             `;
-            taskList.appendChild(li);
+
+            if (!gift.reservado) {
+                giftGrid.appendChild(giftItem);
+            }
         });
     } catch (error) {
-        console.error("Erro ao carregar tarefas:", error);
+        console.error("Erro ao carregar presentes:", error);
     }
 }
 
-// Função para adicionar uma tarefa
-async function addTask() {
-    const taskInput = document.getElementById('taskInput');
-    const taskText = taskInput.value.trim();
+// Selecionar um presente
+function selectGift(giftId, giftName) {
+    selectedGiftId = giftId;
+    alert(`Você selecionou: ${giftName}`);
+}
 
-    if (taskText === '') {
-        alert('Por favor, insira uma tarefa!');
+// Reservar presente
+async function reserveGift() {
+    const nameInput = document.getElementById('nameInput');
+    const name = nameInput.value.trim();
+
+    if (name === '') {
+        alert('Por favor, insira seu nome!');
+        return;
+    }
+
+    if (!selectedGiftId) {
+        alert('Por favor, selecione um presente!');
         return;
     }
 
     try {
-        await addDoc(collection(db, "tasks"), { task: taskText });
-        taskInput.value = '';
-        loadTasks();
+        // Atualizar o presente como reservado
+        const giftDoc = doc(db, "presentes", selectedGiftId);
+        await updateDoc(giftDoc, { reservado: true });
+
+        // Adicionar pessoa à coleção "nomes"
+        await addDoc(collection(db, "nomes"), { nome: name, presenteId: selectedGiftId });
+
+        alert(`Obrigado, ${name}! Seu presente foi reservado.`);
+        nameInput.value = '';
+        selectedGiftId = null;
+
+        loadGifts(); // Atualizar lista de presentes
     } catch (error) {
-        console.error("Erro ao adicionar tarefa:", error);
+        console.error("Erro ao reservar presente:", error);
     }
 }
 
-// Função para excluir uma tarefa
-async function deleteTask(id) {
+// Adicionar novo presente
+async function addGift() {
+    const giftNameInput = document.getElementById('giftNameInput');
+    const giftImageInput = document.getElementById('giftImageInput');
+
+    const giftName = giftNameInput.value.trim();
+    const giftImage = giftImageInput.value.trim();
+
+    if (giftName === '' || giftImage === '') {
+        alert('Por favor, preencha o nome e a URL da imagem!');
+        return;
+    }
+
     try {
-        await deleteDoc(doc(db, "tasks", id));
-        loadTasks();
+        await addDoc(collection(db, "presentes"), { nome: giftName, imagem: giftImage, reservado: false });
+
+        alert(`Presente "${giftName}" adicionado com sucesso!`);
+        giftNameInput.value = '';
+        giftImageInput.value = '';
+
+        loadGifts(); // Atualizar lista de presentes
     } catch (error) {
-        console.error("Erro ao excluir tarefa:", error);
+        console.error("Erro ao adicionar presente:", error);
     }
 }
 
-// Adicionar evento ao botão de adicionar tarefa
-document.getElementById('addTaskButton').addEventListener('click', addTask);
-
-// Carregar as tarefas ao abrir a página
-window.onload = loadTasks;
+// Eventos e carregamento inicial
+window.selectGift = selectGift;
+document.getElementById('reserveGiftButton').addEventListener('click', reserveGift);
+document.getElementById('addGiftButton').addEventListener('click', addGift);
+window.onload = loadGifts;
