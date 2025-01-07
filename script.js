@@ -63,9 +63,12 @@ async function showPresents() {
     sortedPresents.forEach((present) => {
       const presentCard = document.createElement("li");
       presentCard.classList.add("present-card");
+      presentCard.dataset.id = present.id;
+      presentCard.dataset.nome_imagem = present.nome_imagem;
+
   
-      // Gerar o caminho da imagem de forma relativa
-      const imagePath = `Imagens/${present.nome_imagem}.jpg`;  // Caminho relativo
+      // Gerar o caminho da imagem
+      const imagePath = `Imagens/${present.nome_imagem}.jpg`;
   
       // Criar a imagem
       const img = document.createElement("img");
@@ -89,8 +92,7 @@ async function showPresents() {
       // Adicionar o card à lista de presentes
       presentList.appendChild(presentCard);
     });
-}
-
+  }
 
   // Seleciona um presente
 presentList.addEventListener("click", (event) => {
@@ -122,7 +124,7 @@ presentList.addEventListener("click", (event) => {
 
     // Criar o card do presente selecionado
     const selectedPresentName = target.querySelector("p").textContent;
-    const selectedPresentImagePath = `Imagens/${target.querySelector("img").alt}.jpg`;
+    const selectedPresentImagePath = `Imagens/${selectedPresent.dataset.nome_imagem}.jpg`;
 
     // Limpa o conteúdo atual do card de presente selecionado
     selectedPresentCard.innerHTML = "";
