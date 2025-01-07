@@ -1,0 +1,170 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Centralizando o corpo da página */
+  body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+    background-color: #f5f5f5; /* Fundo neutro */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Cabeçalho */
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+    color: #555;
+  }
+  
+  /* Container principal (main) */
+  main {
+    background-color: #fff; /* Fundo da caixa */
+    width: 90%;
+    max-width: 900px;
+    padding: 30px;
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Estilizando as listas como grids (para os cards) */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px); /* Largura fixa dos cards */
+    gap: 15px; /* Espaço entre os itens */
+    padding: 5px;
+    margin-top: 20px;
+    justify-content: center; /* Centraliza o grid horizontalmente */
+    width: 100%; /* Garante que o grid ocupe toda a largura disponível */
+  }
+  
+  /* Card de item */
+  .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Garante espaçamento entre os itens */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 200px; /* Largura fixa */
+    height: 150px; /* Altura fixa */
+  }
+  
+  /* Efeito de hover no card */
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Título do card */
+  .card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #555;
+    flex-grow: 1; /* Garante que o título ocupe o máximo de espaço disponível */
+  }
+  
+  /* Nome do presente ou nome da pessoa */
+  .card p {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 10px;
+    flex-grow: 1; /* Garante que o nome ocupe o máximo de espaço disponível */
+  }
+  
+  /* Formulário */
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* Estilo dos campos de entrada */
+  input[type="text"] {
+    padding: 12px;
+    font-size: 16px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    width: 100%;
+  }
+  
+  /* Foco nos campos de entrada */
+  input[type="text"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+  
+  /* Botão de submit */
+  button[type="submit"] {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  /* Efeito de hover no botão */
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Mensagem de erro */
+  .error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Card selecionado */
+.card.selected {
+    border-color: #4CAF50; /* Borda verde */
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.5); /* Destaque */
+    background-color: #e8f5e9; /* Fundo esverdeado */
+  }
+  
+    /* Botões de exclusão */
+.delete-button {
+    display: block;
+    margin: 20px auto; /* Centraliza o botão */
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #d32f2f; /* Vermelho */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #b71c1c; /* Vermelho mais escuro no hover */
+  }
+  

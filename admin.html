@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Presentes</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header>
+    <h1>Cadastro de Presentes</h1>
+  </header>
+  
+  <main>
+    <form id="present-form">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" placeholder="Digite o nome do presente" required>
+      
+      <label for="nome_imagem">Nome da Imagem:</label>
+      <input type="text" id="nome_imagem" name="nome_imagem" placeholder="Digite o nome da imagem (sem extensão)" required>
+      
+      <button type="submit">Cadastrar Presente</button>
+    </form>
+    <p id="error-message" class="error-message"></p>
+    
+    <h2>Presentes Cadastrados</h2>
+  <div id="present-grid" class="grid-container"></div>
+  <button id="delete-presents-btn" class="delete-button">Excluir Presentes</button>
+
+  <h2>Nomes Cadastrados</h2>
+  <div id="name-grid" class="grid-container"></div>
+  <button id="delete-names-btn" class="delete-button">Excluir Nomes</button>
+  </main>
+  
+  
+  
+  
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

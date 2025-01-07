@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chá de Casa Nova</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="module" src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Presentes</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Lista de Presentes</h1>
-        <div>
-            <input type="text" id="nameInput" placeholder="Digite seu nome">
-        </div>
-        <div id="giftGrid" class="gift-grid"></div>
-        <button class="add" id="reserveGiftButton">Reservar</button>
-        <hr>
-        <h2>Adicionar Presente</h2>
-        <div>
-            <input type="text" id="giftNameInput" placeholder="Nome do presente">
-            <input type="text" id="giftImageInput" placeholder="URL da imagem">
-            <button class="add" id="addGiftButton">Adicionar Presente</button>
-        </div>
+  <header>
+    <h1>Lista de Presentes</h1>
+  </header>
+  <main>
+    <ul id="present-list"></ul>
+    <div id="name-input-container" style="display: none;">
+        <div id="selected-present-container" style="display: none;">
+            <h3>Presente selecionado:</h3>
+            <div id="selected-present-card"></div>
+          </div>
+          <input type="text" id="person-name" placeholder="Digite seu nome">
+          <div id="error-message" class="error-message">Por favor, preencha o seu nome!</div>
+          
+      <button id="reserve-button">Reservar</button>
     </div>
+    <div id="toast" class="toast"></div>
+  </main>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
