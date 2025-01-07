@@ -63,10 +63,9 @@ async function showPresents() {
     sortedPresents.forEach((present) => {
       const presentCard = document.createElement("li");
       presentCard.classList.add("present-card");
-      presentCard.dataset.id = present.id;
   
-      // Gerar o caminho da imagem
-      const imagePath = `Imagens/${present.nome_imagem}.jpg`;
+      // Gerar o caminho da imagem de forma relativa
+      const imagePath = `Imagens/${present.nome_imagem}.jpg`;  // Caminho relativo
   
       // Criar a imagem
       const img = document.createElement("img");
@@ -90,7 +89,8 @@ async function showPresents() {
       // Adicionar o card à lista de presentes
       presentList.appendChild(presentCard);
     });
-  }
+}
+
 
   // Seleciona um presente
 presentList.addEventListener("click", (event) => {
